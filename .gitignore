@@ -14,7 +14,6 @@ gradle/
 .gradle/
 gradlew
 gradlew.bat
-settings.gradle
 
 # eclipse
 .classpath
