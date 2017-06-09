@@ -41,7 +41,7 @@ public abstract class JsonProperties implements CustomJsonIO {
             Class s = getClass();
             while((s = s.getSuperclass()) != null && !s.equals(Object.class))
                 Collections.addAll(fields, s.getDeclaredFields());
-            for (Field field : getClass().getDeclaredFields()) {
+            for (Field field : fields) {
                 if (field.isAnnotationPresent(Property.class)) {
                     try {
                         Property property = field.getAnnotation(Property.class);
