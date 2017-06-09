@@ -4,6 +4,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by NachtRaben on 4/20/2017.
@@ -33,6 +36,11 @@ public abstract class JsonProperties implements CustomJsonIO {
     public void read(JsonElement me) {
         if (me instanceof JsonObject) {
             JsonObject jo = me.getAsJsonObject();
+            List<Field> fields = new ArrayList<>();
+            Collections.addAll(fields, getClass().getDeclaredFields());
+            Class s = getClass();
+            while((s = s.getSuperclass()) != null && !s.equals(Object.class))
+                Collections.addAll(fields, s.getDeclaredFields());
             for (Field field : getClass().getDeclaredFields()) {
                 if (field.isAnnotationPresent(Property.class)) {
                     try {
