@@ -73,7 +73,7 @@ public class ConfigurationUtils {
             JsonReader jr = new JsonReader(in);
             JsonParser jp = new JsonParser();
             JsonElement je = jp.parse(jr);
-            if(je.isJsonNull()) {
+            if (je.isJsonNull()) {
                 System.out.println("Populating defaults!");
                 saveData(filename, dataDir, properties);
             }
@@ -117,14 +117,18 @@ public class ConfigurationUtils {
 
     public static <T extends CustomJsonIO> void saveData(String filename, File dataDir, T data) {
         File config = new File(dataDir, filename);
-        dataDir.mkdirs();
         try {
             if (data != null) {
+                if (!dataDir.exists())
+                    dataDir.mkdirs();
+                if (!config.exists())
+                    config.createNewFile();
+
                 FileWriter fw = new FileWriter(config);
                 GSON_P.toJson(data.write(), fw);
                 fw.close();
                 File backupCopy = new File(dataDir, config + ".backup");
-                if(!backupCopy.exists())
+                if (!backupCopy.exists())
                     backupCopy.createNewFile();
                 Files.copy(config.toPath(), backupCopy.toPath(), REPLACE_EXISTING);
             }
