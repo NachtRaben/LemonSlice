@@ -127,7 +127,7 @@ public class ConfigurationUtils {
                 FileWriter fw = new FileWriter(config);
                 GSON_P.toJson(data.write(), fw);
                 fw.close();
-                File backupCopy = new File(dataDir, config + ".backup");
+                File backupCopy = new File(dataDir, config.getName() + ".backup");
                 if (!backupCopy.exists())
                     backupCopy.createNewFile();
                 Files.copy(config.toPath(), backupCopy.toPath(), REPLACE_EXISTING);
