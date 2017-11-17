@@ -123,7 +123,10 @@ public class ConfigurationUtils {
                 FileWriter fw = new FileWriter(config);
                 GSON_P.toJson(data.write(), fw);
                 fw.close();
-                Files.copy(config.toPath(), new File(dataDir, config + ".backup").toPath(), REPLACE_EXISTING);
+                File backupCopy = new File(dataDir, config + ".backup");
+                if(!backupCopy.exists())
+                    backupCopy.createNewFile();
+                Files.copy(config.toPath(), backupCopy.toPath(), REPLACE_EXISTING);
             }
         } catch (IOException e) {
             logger.debug("Failed to write configuration " + filename + ".", e);
